@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weed diaries | Emerald Media Group</title>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width, inital-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <script type="text/javascript" src="//use.typekit.net/gpi1aid.js"></script>
+  <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+  <meta property="fb:admins" content="100001785043323" />
+  <meta property="fb:app_id" content="197312536953017" />
+  <meta property="og:title" content="Weed diaries" />
+  <meta property="og:description" content="Come November, Oregonians will ask themselves once again: Should recreational marijuana be legal? A 2012 measure to legalize the green was shot down by Oregon voters, but Colorado and Washington managed to make it happen. Will this year yield a different result?" />
+  <meta property="og:url" content="http://weed.dailyemerald.com/results" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://i.imgur.com/nkfhNvK.png" />
+</head>
+<body>
+
+<%= yield %>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-50142839-1', 'dailyemerald.com');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

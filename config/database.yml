@@ -1,0 +1,26 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: weed_development
+  pool: 5
+  username: <%= `whoami` %>
+  host: localhost
+  port: 5432
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: weed_test
+  pool: 5
+  username: <%= `whoami` %>
+  host: localhost
+  port: 5432
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: weed_production
+  pool: 5
+  username: <%= `whoami` %>
+  host: localhost
+  port: 5432

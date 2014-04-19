@@ -1,0 +1,48 @@
+<div class="wrapper">
+		
+		<div class="logo">
+			<a href="http://dailyemerald.com"><%= image_tag "logo.png" %></a>
+		</div>
+
+		<div class="intro">
+			<h1>Weed diaries</h1>
+			<p>Come November, Oregonians will ask themselves once again: Should recreational marijuana be legal? A 2012 measure to legalize the green was shot down by Oregon voters, but Colorado and Washington managed to make it happen. Will this year yield a different result? </p>
+
+			<p>Help lead the conversation and let us know your thoughts on its legalization.</p>
+		</div>
+		
+		<%= form_tag(@form_endpoint) %>
+
+			<div class="question">
+				<h2>Are you for the legalization of recreational marijuana?</h2>
+				<div class="segment">
+					<% ["Yes", "No"].each do |value| %>
+						<div class="answer">
+							<label><%= radio_button("support", nil, value) %> <%= value %></label>
+						</div>			
+					<% end %>
+				</div>				
+			</div>
+
+			<div class="question">
+				<h2>Which of these words come to mind when you hear the word “weed.” (Check all that apply.)</h2>
+				<% @vote.checkbox_values.each do |value| %>		
+					<div class="answer">
+						<label><%= check_box_tag("checkboxes[]", value) %> <%= value %></label>
+					</div>
+				<% end %>				
+			</div>
+
+			<div class="question">
+				<h2>Whether the green is not your thing or you blaze like Snoop Dogg, tell us the experience with marijuana that shaped your view the most. Be specific. (optional)</h2>
+				<div class="answer">
+					<%= text_area_tag "story", nil, rows: 5, cols: 40, class: "story-textarea" %><label class="story-textarea-label">Characters Remaining: <span class="char-count">300</span></label>					
+				</div>
+			</div>  
+
+			<input type="submit" class="submit-button">
+			
+		</form>
+
+		
+</div><!-- .wrapper -->

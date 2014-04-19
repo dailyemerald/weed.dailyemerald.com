@@ -1,0 +1,138 @@
+<script>
+
+segments = ["Yes", "No"];
+user_distrubution = <%= raw JSON.pretty_generate @user_distrubution %>;
+categories = <%= raw JSON.pretty_generate @categories %>;
+votes = <%= raw JSON.pretty_generate @votes %>;
+
+var render = function(animate) {
+
+
+	var margin = {top: 0, right: 10, bottom: 20, left: 10},
+      width = $(window).width() - margin.left - margin.right - 20,
+      height = 600 - margin.top - margin.bottom;
+	
+
+    $('.vis .inner').html('') //ugz
+	var stage = d3.select('.vis .inner').append('svg')		
+		.attr('width', width + margin.left + margin.right)
+	    .attr('height', height + margin.top + margin.bottom)
+	  .append('g')
+	    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	    
+
+	 var x0 = Math.max(
+	 	-d3.min(votes, function(d) { return d.count }), 
+	 	 d3.max(votes, function(d) { return d.count })
+	 );
+
+	 var x = d3.scale.linear()
+    	.domain([-x0, x0])
+    	.range([width, 0])
+    	.nice();
+
+	var y = d3.scale.ordinal()
+    	.rangeRoundBands([0, height], .1)
+    	.domain(categories);
+
+    var xAxis = d3.svg.axis()
+    	.scale(x)
+    	.orient("bottom");
+
+    var bar = stage.selectAll('.bar')
+      .data(votes)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function() { return x(0) })
+      .attr("y", function(d, i) { return y(d.category) })      
+      .attr("height", y.rangeBand())
+      .style('fill', function(d) {
+      	if (d.segment === 'Yes') {
+      		return '#666666';
+      	} else {
+      		return '#515151';
+      	}
+      })
+      .attr("width", 0);
+
+    var bar_transition;
+    if (animate === true) {
+		bar_transition = bar.transition().duration(1500)
+	} else {
+		bar_transition = bar;
+	}
+
+	bar_transition.attr("x", function(d, i) {       	
+	  	if (d.segment === "No") {
+	  		return x(d.count)
+	  	} else {
+	  		return x(0)
+	  	}      	
+	  }) 
+	  .attr("width", function(d) { 
+	  	var count = d.count;
+	  	if (d.segment === "No") {
+	  		count = -count;
+	  	}
+	  	return Math.abs(x(count) - x(0));
+	  })
+    
+    stage.selectAll('.label')
+      .data(votes)
+    .enter().append("text")
+      .text(function(d, i) { return d.category })
+      .attr('class', 'label')
+      .attr('x', function(d, i) { return x(0) + 10 })
+      .attr('y', function(d, i) { return y(d.category) })
+      .attr('dy', 28)
+
+     stage.append('g')
+       .attr("class", "x axis")     
+       .attr("transform", "translate(0, " + height + ")")
+       .call(xAxis);
+    
+}
+
+$(document).ready(function() {
+	render(true);
+	$(window).resize(function() {
+		render(false);
+	});
+});
+
+</script>
+
+<div class="logo" style="margin-top:70px;padding-bottom:20px;">
+	<a href="http://dailyemerald.com"><%= image_tag "logo.png" %></a>
+</div>
+
+<% if params[:review] == 't' %>
+	<h3 class="in-review">Your story is being reviewed.</h3>
+<% end %>
+
+<div class="story-wrapper results-header">
+	<h1>The results</h1>
+	<h3 style="margin:30px 0">(Just arriving? <a href="/" class="">Submit your story</a>.)</h3>
+	<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fweed.dailyemerald.com%2Fresults&amp;width=200&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=true&amp;height=21&amp;appId=300474393462938" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:21px;" allowTransparency="true"></iframe>
+</div>
+
+<div class="vis">
+	<div class="label left">DON'T<br>SUPPORT</div>
+	<div class="label right">SUPPORT</div>
+	<div class="inner"></div>
+</div>
+
+<div class="story-wrapper">
+
+	<h2><%= @stories.count %> stories</h2>
+
+	<% @stories.each do |story| %>
+		<div class="story">
+			<span>“<%= story.story %>”</span><br>
+			<small>Supports legalization? <b><%= story.support %></b></small> &bull;
+			<small><%= story.created_at.strftime("%b %e, %l:%M %p") %></small>
+
+		</div>
+	<% end %>
+</div>
+

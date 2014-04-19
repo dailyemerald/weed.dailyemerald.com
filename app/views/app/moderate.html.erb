@@ -1,0 +1,25 @@
+<style>
+body {
+	background: #FFF !important;
+}
+</style>
+
+<div class="col">
+<h2>Not Approved</h2>
+<% @not_approved.each do |not_approved| %>
+	<div class="admin-story">
+		<p><%= not_approved.story %></p>
+		<%= link_to "approve this", approve_story_path(not_approved.id), method: :post %>
+	</div>
+<% end %>
+</div>
+
+<div class="col">
+<h2>Approved</h2>
+<% @approved.each do |approved| %>
+	<div class="admin-story">
+		<p><%= approved.story %></p>
+		<%= link_to "unapprove this", unapprove_story_path(approved.id), method: :post %>
+	</div>
+<% end %>
+</div>

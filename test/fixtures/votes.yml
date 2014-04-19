@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user: MyString
+  checkboxes: MyString
+  story: MyText
+  story_approved: false
+
+two:
+  user: MyString
+  checkboxes: MyString
+  story: MyText
+  story_approved: false
